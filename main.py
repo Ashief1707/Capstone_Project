@@ -5,7 +5,7 @@ import seaborn as sns
 from IPython.display import display
 
 # 1. LOAD DATA
-df = pd.read_csv('/content/drive/MyDrive/BENGKEL KODING/ObesityDataSet.csv')
+df = pd.read_csv('ObesityDataSet.csv')
 
 # 2. TAMPILKAN BEBERAPA BARIS PERTAMA DAN INFORMASI UMUM DATASET
 print("="*50)
