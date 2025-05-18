@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from IPython.display import display
+import os
 
 # 1. LOAD DATA
 df = pd.read_csv('ObesityDataSet.csv')
@@ -59,8 +60,9 @@ if len(categorical_cols) > 0:
         plt.title(f'Distribusi {col} (10 Kategori Teratas)')
         plt.xticks(rotation=45, ha='right')
         plt.tight_layout()
-        plt.savefig(f'distribusi_{col}.png')
-        plt.show()
+        file_path = os.path.join('Assets/distribusi_kategorikal', f'distribusi_{col}.png')
+        plt.savefig(file_path)
+        plt.close()
 
 
 # 4. CEK MISSING VALUES, UNIQUE VALUES, DATA DUPLIKAT, DAN OUTLIERS
@@ -81,7 +83,8 @@ plt.figure(figsize=(12, 6))
 sns.heatmap(df.isnull(), cbar=False, cmap='viridis', yticklabels=False)
 plt.title('Missing Values Heatmap')
 plt.tight_layout()
-plt.savefig('missing_values.png')
+file_path = os.path.join('Assets/missing_values', 'missing_values.png')
+plt.savefig(file_path)
 plt.show()
 
 # 4.2 Unique Values
@@ -116,7 +119,8 @@ if len(categorical_cols) > 0:
             sns.countplot(y=df[col])
             plt.title(f'Distribusi Kelas untuk {col}')
             plt.tight_layout()
-            plt.savefig(f'class_balance_{col}.png')
+            file_path = os.path.join('Assets/class_balance', f'class_balance_{col}.png')
+            plt.savefig(file_path)
             plt.show()
 
 # 4.5 DETEKSI NILAI TIDAK UMUM PADA DATA KATEGORIKAL
