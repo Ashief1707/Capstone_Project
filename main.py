@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[48]:
 
 
 import pandas as pd
@@ -31,14 +31,14 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier 
 
 
-# In[2]:
+# In[49]:
 
 
 #  LOAD DATA
 df = pd.read_csv('ObesityDataSet.csv')
 
 
-# In[3]:
+# In[50]:
 
 
 # 1. TAMPILKAN BEBERAPA BARIS PERTAMA DAN INFORMASI UMUM DATASET
@@ -47,7 +47,7 @@ print("1. EXPLORATORY DATA ANALYSIS (EDA)")
 print("="*50)
 
 
-# In[4]:
+# In[51]:
 
 
 # Menampilkan 5 baris pertama
@@ -55,7 +55,7 @@ print("\nDATA PREVIEW (5 BARIS PERTAMA):")
 print(df.head())
 
 
-# In[5]:
+# In[52]:
 
 
 # Informasi umum dataset
@@ -65,7 +65,7 @@ print(f"Jumlah kolom: {df.shape[1]}")
 print(f"Nama kolom: {', '.join(df.columns)}")
 
 
-# In[6]:
+# In[53]:
 
 
 # Tipe data
@@ -77,7 +77,7 @@ print("\nTIPE DATA:")
 print(df.dtypes)
 
 
-# In[7]:
+# In[54]:
 
 
 # Deskripsi Data
@@ -85,7 +85,7 @@ print("\nDESKRIPSI DATA :")
 print(df.describe(include='all'))
 
 
-# In[8]:
+# In[55]:
 
 
 # VISUALISASI DATA
@@ -94,7 +94,7 @@ print("VISUALISASI DATA")
 print("="*50)
 
 
-# In[9]:
+# In[56]:
 
 
 # Pengaturan untuk tampilan grafik
@@ -102,7 +102,7 @@ plt.style.use('ggplot')
 plt.rcParams['figure.figsize'] = (14, 8)
 
 
-# In[10]:
+# In[57]:
 
 
 # Visualisasi kolom numerik
@@ -125,7 +125,7 @@ for i, col in enumerate(kolom_numerik):
     plt.show()
 
 
-# In[11]:
+# In[58]:
 
 
 # Visualisasi kolom categorical
@@ -150,7 +150,7 @@ for col in df.select_dtypes(include=['object']).columns:
     plt.show()
 
 
-# In[12]:
+# In[59]:
 
 
 #  CEK MISSING VALUES, UNIQUE VALUES, DATA DUPLIKAT, DAN OUTLIERS
@@ -159,7 +159,7 @@ print("CEK KUALITAS DATA")
 print("="*50)
 
 
-# In[13]:
+# In[60]:
 
 
 # 4.1 Missing Values
@@ -171,7 +171,7 @@ missing_data = pd.DataFrame({'Missing Values': missing_values,
 print(missing_data[missing_data['Missing Values'] > 0])
 
 
-# In[14]:
+# In[61]:
 
 
 # Visualisasi missing values
@@ -184,7 +184,7 @@ plt.savefig(file_path)
 plt.show()
 
 
-# In[15]:
+# In[62]:
 
 
 #  Unique Values
@@ -198,7 +198,7 @@ unique_values = pd.DataFrame({
 print(unique_values)
 
 
-# In[16]:
+# In[63]:
 
 
 # Data Duplikat
@@ -207,7 +207,7 @@ duplicates = df.duplicated().sum()
 print(f"Jumlah baris duplikat: {duplicates} ({(duplicates/len(df))*100:.2f}%)")
 
 
-# In[17]:
+# In[64]:
 
 
 # Keseimbangan Data (untuk data kategorikal dan target )
@@ -233,28 +233,28 @@ if len(categorical_cols) > 0:
             plt.show()
 
 
-# In[18]:
+# In[65]:
 
 
 # DETEKSI OUTLIER
 print("\nDETEKSI OUTLIER (MENGGUNAKAN METODE IQR):")
 
 
-# In[19]:
+# In[66]:
 
 
 # Ganti '?' dengan NaN
 df = df.replace('?', np.nan)
 
 
-# In[20]:
+# In[67]:
 
 
 # Inisialisasi dictionary untuk menyimpan informasi outlier
 outlier_summary = {}
 
 
-# In[21]:
+# In[68]:
 
 
 # Ringkasan outlier untuk kolom numerik dan kategorikal
@@ -294,7 +294,7 @@ else:
             print(f"  {col}: {count} outlier ditemukan")
 
 
-# In[22]:
+# In[69]:
 
 
 # 5. KESIMPULAN
@@ -305,7 +305,7 @@ print("\nBerikut kesimpulan dari proses EDA:")
 print("1. Dataset memiliki {} baris dan {} kolom.".format(df.shape[0], df.shape[1]))
 
 
-# In[23]:
+# In[70]:
 
 
 # Missing values
@@ -316,7 +316,7 @@ else:
     print("2. Tidak terdapat missing values pada dataset.")
 
 
-# In[24]:
+# In[71]:
 
 
 # Duplicates
@@ -326,7 +326,7 @@ else:
     print("3. Tidak terdapat data duplikat pada dataset.")
 
 
-# In[25]:
+# In[72]:
 
 
 # Outliers
@@ -356,7 +356,7 @@ else:
     print("4. Tidak terdeteksi outlier pada dataset.")
 
 
-# In[26]:
+# In[73]:
 
 
 # 2. Tpreprocessing data
@@ -365,7 +365,7 @@ print("2. PREPROCESSING DATA")
 print("="*50)
 
 
-# In[27]:
+# In[74]:
 
 
 # tangani missing values di setiap kolom
@@ -390,7 +390,7 @@ print("\nMissing values setelah imputasi:")
 print(df.isnull().sum())
 
 
-# In[28]:
+# In[75]:
 
 
 # Perbaikan ketidakkonsistensinan data untuk kolom numerik
@@ -422,7 +422,7 @@ print("\nRange nilai setelah perbaikan:")
 print(df[kolom_numerik].head(25))
 
 
-# In[29]:
+# In[76]:
 
 
 # Perbaikan ketidakkonsistensinan data untuk kolom kategorikal
@@ -437,7 +437,7 @@ print("\nSample data setelah perbaikan:")
 print(df[categorical_cols].head(10))
 
 
-# In[30]:
+# In[77]:
 
 
 # Show number of duplicates before removal
@@ -455,7 +455,7 @@ df = df.reset_index(drop=True)
 print("\nUkuran dataset setelah penanganan duplikasi:", df.shape)
 
 
-# In[31]:
+# In[78]:
 
 
 print("Mengubah kolom kategorikal menjadi numerik...")
@@ -498,7 +498,7 @@ print(f"Nilai asli: {df['NObeyesdad'].unique()}")
 print(f"Nilai setelah encode: {df_encoded['NObeyesdad'].unique()}")
 
 
-# In[32]:
+# In[79]:
 
 
 # menampilkan kolom target setelah encoding
@@ -510,7 +510,7 @@ print(df_encoded['NObeyesdad'].head(10))
 
 
 
-# In[33]:
+# In[80]:
 
 
 print("\nMenampilkan kolom yang paling berpengaruh terhadap kolom target")
@@ -528,12 +528,8 @@ model.fit(X_train, y_train)
 importance = pd.Series(model.feature_importances_, index=X.columns).sort_values(ascending=False)
 print(importance)
 
-# Visualisasi
-importance.plot(kind='bar', title='Feature Importance')
-plt.show()
 
-
-# In[34]:
+# In[81]:
 
 
 # pemilihan fitur menggunakan RFE (Recursive Feature Elimination)
@@ -559,7 +555,7 @@ for i, feature in enumerate(X_selected_df.columns, 1):
     print(f"{i}. {feature}")
 
 
-# In[35]:
+# In[82]:
 
 
 # Peneyimbangan data dengan SMOTE
@@ -673,7 +669,7 @@ print(f"Fitur yang digunakan: {len(top_10_features)} fitur")
 print(f"Semua kelas target sekarang seimbang: {len(set(y_balanced))} kelas dengan masing-masing {max(pd.Series(y_balanced).value_counts())} data")
 
 
-# In[36]:
+# In[83]:
 
 
 # normaliassi atau standarisasi data
@@ -710,7 +706,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[37]:
+# In[84]:
 
 
 # Menyimpan top 10 feature dan kolom target yang dipilih ke daalam file csv
@@ -726,7 +722,7 @@ print(f"Saved {len(selected_columns)} columns: {', '.join(selected_columns)}")
 print(f"Total rows: {len(df_selected)}")
 
 
-# In[38]:
+# In[85]:
 
 
 # 3. Pemodelan dan Evaluasi
@@ -735,7 +731,7 @@ print("3. Pemodelan dan Evaluasi")
 print("="*50)
 
 
-# In[42]:
+# In[86]:
 
 
 warnings.filterwarnings('ignore')
@@ -816,7 +812,7 @@ for name, accuracy in accuracies.items():
 # 
 # Sebaliknya, **Logistic Regression menunjukkan performa yang kurang memuaskan** dengan akurasi hanya 70.33% dan kesulitan dalam mengklasifikasikan beberapa kategori seperti "normal_weight" (recall 0.36) dan "overweight_level_i" (recall 0.32). Perbedaan performa yang signifikan ini mengindikasikan bahwa hubungan antar fitur dalam dataset obesitas bersifat non-linear dan kompleks, sehingga algoritma ensemble seperti Random Forest yang mampu menangkap pola kompleks melalui kombinasi multiple decision trees lebih efektif dibandingkan model linear seperti Logistic Regression. **Rekomendasi untuk implementasi praktis adalah menggunakan Random Forest** sebagai model utama untuk sistem prediksi tingkat obesitas.
 
-# In[40]:
+# In[87]:
 
 
 # 4. Hyperparameter Tuning
@@ -825,7 +821,7 @@ print("4. Hyperparameter Tuning")
 print("="*50)
 
 
-# In[41]:
+# In[88]:
 
 
 # Import library tambahan untuk hyperparameter tuning
