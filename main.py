@@ -30,6 +30,11 @@ import warnings
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier 
 
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+from sklearn.metrics import make_scorer, f1_score
+import numpy as np
+import time
+
 
 # In[166]:
 
@@ -833,11 +838,7 @@ print("="*50)
 # In[ ]:
 
 
-# Import library tambahan untuk hyperparameter tuning
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-from sklearn.metrics import make_scorer, f1_score
-import numpy as np
-import time
+
 
 print("="*60)
 print("HYPERPARAMETER TUNING DAN OPTIMASI MODEL")
