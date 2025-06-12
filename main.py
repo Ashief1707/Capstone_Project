@@ -123,6 +123,7 @@ for i, col in enumerate(kolom_numerik):
 
     plt.savefig(file_path)
     plt.show()
+    plt.close()  # Tutup plot untuk menghemat memori
 
 
 # In[58]:
@@ -148,6 +149,7 @@ for col in df.select_dtypes(include=['object']).columns:
 
     plt.savefig(file_path)
     plt.show()
+    plt.close()  # Tutup plot untuk menghemat memori
 
 
 # In[59]:
@@ -182,6 +184,7 @@ plt.tight_layout()
 file_path = os.path.join('Assets/missing_values', 'missing_values.png')
 plt.savefig(file_path)
 plt.show()
+plt.close()  # Tutup plot untuk menghemat memori
 
 
 # In[62]:
@@ -231,6 +234,7 @@ if len(categorical_cols) > 0:
             file_path = os.path.join('Assets/class_balance/categorical', f'class_balance_{col}.png')
             plt.savefig(file_path)
             plt.show()
+            plt.close()
 
 
 # In[65]:
@@ -590,6 +594,7 @@ plt.ylabel('Count')
 
 plt.tight_layout()
 plt.show()
+plt.close()
 
 # Print class distribution before and after SMOTE
 print("\nClass distribution before SMOTE:")
@@ -632,6 +637,7 @@ for i, feature in enumerate(top_10_features):
 
 plt.tight_layout()
 plt.show()
+plt.close()
 
 print('''
       Seperti yang terlihat, nilai rata-rata fitur seperti berat badan turun sedikit dari 88,80 menjadi 87,18 kg, 
@@ -659,6 +665,7 @@ for bar, value in zip(bars, values):
            f'{value}', ha='center', va='bottom', fontweight='bold', fontsize=12)
 
 plt.show()
+plt.close()
 
 # Tampilkan ringkasan sederhana
 print(f"\nRINGKASAN BALANCING:")
@@ -704,6 +711,7 @@ plt.xticks(range(1, len(numeric_columns) + 1), numeric_columns, rotation=45)
 
 plt.tight_layout()
 plt.show()
+plt.close()
 
 
 # In[84]:
@@ -789,6 +797,7 @@ for name, model in models.items():
     plt.xlabel('Predicted Label')
     plt.tight_layout()
     plt.show()
+    plt.close()
 
 # Compare model performances
 accuracies = {name: result['accuracy'] for name, result in results.items()}
@@ -801,6 +810,7 @@ for i, v in enumerate(accuracies.values()):
     plt.text(i, v + 0.01, f'{v:.4f}', ha='center')
 plt.tight_layout()
 plt.show()
+plt.close()
 
 # Print final comparison
 print("\nFinal Model Comparison:")
@@ -950,6 +960,7 @@ for name, model in optimized_models.items():
     plt.xlabel('Label Prediksi')
     plt.tight_layout()
     plt.show()
+    plt.close()
 
 print(f"\n{'='*60}")
 print("PERBANDINGAN PERFORMA SEBELUM DAN SESUDAH OPTIMASI")
@@ -1025,6 +1036,7 @@ for i, score in enumerate(best_cv_scores):
 
 plt.tight_layout()
 plt.show()
+plt.close()
 
 # Print tabel perbandingan detail
 print("\nTABEL PERBANDINGAN DETAIL:")
