@@ -51,7 +51,7 @@ st.subheader("1. EDA (Exploratory Data Analysis)")
 
 
 # Menampilkan 5 baris pertama
-st.dataframe("\nDATA PREVIEW (5 BARIS PERTAMA):")
+st.write("\nDATA PREVIEW (5 BARIS PERTAMA):")
 st.dataframe(df.head())
 
 
@@ -59,10 +59,10 @@ st.dataframe(df.head())
 
 
 # Informasi umum dataset
-st.dataframe("\nINFORMASI UMUM DATASET:")
-st.dataframe(f"Jumlah baris: {df.shape[0]}")
-st.dataframe(f"Jumlah kolom: {df.shape[1]}")
-st.dataframe(f"Nama kolom: {', '.join(df.columns)}")
+st.write("\nINFORMASI UMUM DATASET:")
+st.write(f"Jumlah baris: {df.shape[0]}")
+st.write(f"Jumlah kolom: {df.shape[1]}")
+st.write(f"Nama kolom: {', '.join(df.columns)}")
 
 
 # In[53]:
@@ -73,7 +73,7 @@ df = df.replace('?', np.nan)
 kolom_numerik = ['Age', 'Height', 'Weight', 'FCVC', 'NCP', 'CH2O', 'FAF', 'TUE']
 for kol in kolom_numerik:
     df[kol] = pd.to_numeric(df[kol], errors='coerce')
-st.dataframe("\nTIPE DATA:")
+st.write("\nTIPE DATA:")
 st.dataframe(df.dtypes)
 
 
@@ -81,7 +81,7 @@ st.dataframe(df.dtypes)
 
 
 # Deskripsi Data
-st.dataframe("\nDESKRIPSI DATA :")
+st.write("\nDESKRIPSI DATA :")
 st.dataframe(df.describe(include='all'))
 
 
@@ -104,7 +104,7 @@ plt.rcParams['figure.figsize'] = (14, 8)
 
 
 # Visualisasi kolom numerik
-st.dataframe("\nVisualisai KOLOM NUMERIK")
+st.write("\nVisualisai KOLOM NUMERIK")
 for i, col in enumerate(kolom_numerik):
     plt.figure(figsize=(12, 6))
 
@@ -128,7 +128,7 @@ for i, col in enumerate(kolom_numerik):
 
 
 # Visualisasi kolom categorical
-st.dataframe("\nVisualisai KOLOM CATEGORICAL")
+st.write("\nVisualisai KOLOM CATEGORICAL")
 for col in df.select_dtypes(include=['object']).columns:
     plt.figure(figsize=(12, 6))
 
@@ -161,7 +161,7 @@ st.subheader("CEK KUALITAS DATA")
 
 
 # 4.1 Missing Values
-st.dataframe("\nMISSING VALUES:")
+st.write("\nMISSING VALUES:")
 missing_values = df.isnull().sum()
 missing_percent = (missing_values / len(df)) * 100
 missing_data = pd.DataFrame({'Missing Values': missing_values,
@@ -187,7 +187,7 @@ plt.close()  # Tutup plot untuk menghemat memori
 
 
 #  Unique Values
-st.dataframe("\nUNIQUE VALUES:")
+st.write("\nUNIQUE VALUES:")
 unique_values = pd.DataFrame({
     'Column': df.columns,
     'Data Type': df.dtypes,
@@ -201,9 +201,9 @@ st.dataframe(unique_values)
 
 
 # Data Duplikat
-st.dataframe("\nDATA DUPLIKAT:")
+st.write("\nDATA DUPLIKAT:")
 duplicates = df.duplicated().sum()
-st.dataframe(f"Jumlah baris duplikat: {duplicates} ({(duplicates/len(df))*100:.2f}%)")
+st.write(f"Jumlah baris duplikat: {duplicates} ({(duplicates/len(df))*100:.2f}%)")
 
 
 # In[64]:
@@ -212,15 +212,15 @@ st.dataframe(f"Jumlah baris duplikat: {duplicates} ({(duplicates/len(df))*100:.2
 # Keseimbangan Data (untuk data kategorikal dan target )
 categorical_cols = df.select_dtypes(include=['object']).columns
 if len(categorical_cols) > 0:
-    st.dataframe("\nKESEIMBANGAN DATA KATEGORIKAL:")
+    st.write("\nKESEIMBANGAN DATA KATEGORIKAL:")
     for col in categorical_cols:
         if df[col].nunique() < 10:  # Hanya tampilkan jika jumlah kelas < 10
             class_counts = df[col].value_counts()
             class_percents = (class_counts / len(df)) * 100
 
-            st.dataframe(f"\nDistribusi untuk {col}:")
+            st.write(f"\nDistribusi untuk {col}:")
             for cls, count in class_counts.items():
-                st.dataframe(f"  {cls}: {count} ({class_percents[cls]:.2f}%)")
+                st.write(f"  {cls}: {count} ({class_percents[cls]:.2f}%)")
 
             # Visualisasi keseimbangan
             plt.figure(figsize=(10, 6))
@@ -261,7 +261,7 @@ outlier_summary = {}
 # Untuk kolom numerik
 for col in kolom_numerik:
     if df[col].isna().all():
-        st.dataframe(f"Kolom {col}: Tidak dapat menghitung outlier (semua data NaN)")
+        st.write(f"Kolom {col}: Tidak dapat menghitung outlier (semua data NaN)")
         continue
 
     Q1 = df[col].quantile(0.25)
@@ -275,23 +275,23 @@ for col in kolom_numerik:
     outlier_summary[col] = outlier_count
 
 # Untuk kolom kategorikal
-st.dataframe("\nFrekuensi tidak umum pada kolom kategorikal:")
+st.write("\nFrekuensi tidak umum pada kolom kategorikal:")
 for col in df.select_dtypes(include=['object']).columns:
     value_counts = df[col].value_counts()
     total_count = len(df)
     rare_values = value_counts[value_counts/total_count < 0.01]  # kurang dari 1%
 
     if len(rare_values) > 0:
-        st.dataframe(f"\n{col}:")
+        st.write(f"\n{col}:")
         for value, count in rare_values.items():
-            st.dataframe(f"  {value}: {count} ({(count/total_count)*100:.2f}%)")
-st.dataframe("\nRingkasan Outlier:")
+            st.write(f"  {value}: {count} ({(count/total_count)*100:.2f}%)")
+st.write("\nRingkasan Outlier:")
 if all(count == 0 for count in outlier_summary.values()):
-    st.dataframe("  Tidak ada outlier yang ditemukan di semua kolom numerik.")
+    st.write("  Tidak ada outlier yang ditemukan di semua kolom numerik.")
 else:
     for col, count in outlier_summary.items():
         if count > 0:
-            st.dataframe(f"  {col}: {count} outlier ditemukan")
+            st.write(f"  {col}: {count} outlier ditemukan")
 
 
 # In[69]:
@@ -299,8 +299,8 @@ else:
 
 # 5. KESIMPULAN
 st.subheader("KESIMPULAN EDA")
-st.dataframe("\nBerikut kesimpulan dari proses EDA:")
-st.dataframe("1. Dataset memiliki {} baris dan {} kolom.".format(df.shape[0], df.shape[1]))
+st.write("\nBerikut kesimpulan dari proses EDA:")
+st.write("1. Dataset memiliki {} baris dan {} kolom.".format(df.shape[0], df.shape[1]))
 
 
 # In[70]:
@@ -308,10 +308,10 @@ st.dataframe("1. Dataset memiliki {} baris dan {} kolom.".format(df.shape[0], df
 
 # Missing values
 if missing_values.sum() > 0:
-    st.dataframe("2. Terdapat {} missing values pada {} kolom.".format(
+    st.write("2. Terdapat {} missing values pada {} kolom.".format(
         missing_values.sum(), len(missing_data[missing_data['Missing Values'] > 0])))
 else:
-    st.dataframe("2. Tidak terdapat missing values pada dataset.")
+    st.write("2. Tidak terdapat missing values pada dataset.")
 
 
 # In[71]:
@@ -319,9 +319,9 @@ else:
 
 # Duplicates
 if duplicates > 0:
-    st.dataframe("3. Terdapat {} baris duplikat ({:.2f}%).".format(duplicates, (duplicates/len(df))*100))
+    st.write("3. Terdapat {} baris duplikat ({:.2f}%).".format(duplicates, (duplicates/len(df))*100))
 else:
-    st.dataframe("3. Tidak terdapat data duplikat pada dataset.")
+    st.write("3. Tidak terdapat data duplikat pada dataset.")
 
 
 # In[72]:
@@ -349,9 +349,9 @@ for col in df.select_dtypes(include=['object']).columns:
         outlier_count.append(col)
 
 if len(outlier_count) > 0:
-    st.dataframe("4. Terdeteksi outlier pada kolom: {}.".format(", ".join(outlier_count)))
+    st.write("4. Terdeteksi outlier pada kolom: {}.".format(", ".join(outlier_count)))
 else:
-    st.dataframe("4. Tidak terdeteksi outlier pada dataset.")
+    st.write("4. Tidak terdeteksi outlier pada dataset.")
 
 
 # In[73]:
@@ -366,9 +366,9 @@ st.subheader("2. PREPROCESSING DATA")
 
 
 # tangani missing values di setiap kolom
-st.dataframe("=== Missing Values ===")
-st.dataframe("Missing values sebelum imputasi:")
-st.dataframe(df.isnull().sum())
+st.write("=== Missing Values ===")
+st.write("Missing values sebelum imputasi:")
+st.write(df.isnull().sum())
 
 # Imputasi missing values untuk kolom numerik dengan median
 for col in kolom_numerik:
@@ -383,7 +383,7 @@ for col in categorical_cols:
         mode_value = df[col].mode()[0]
         df[col] = df[col].fillna(mode_value)
 
-st.dataframe("\nMissing values setelah imputasi:")
+st.write("\nMissing values setelah imputasi:")
 st.dataframe(df.isnull().sum())
 
 
@@ -391,7 +391,7 @@ st.dataframe(df.isnull().sum())
 
 
 # Perbaikan ketidakkonsistensinan data untuk kolom numerik
-st.dataframe("=== Perbaikan Ketidakkonsistenan Data Numerik ===")
+st.write("=== Perbaikan Ketidakkonsistenan Data Numerik ===")
 
 # Age harus berupa bilangan bulat
 df['Age'] = df['Age'].round().astype(int)
@@ -415,7 +415,7 @@ df['FAF'] = df['FAF'].clip(lower=0, upper=3)
 # TUE (Time using technology devices) range 0-2
 df['TUE'] = df['TUE'].clip(lower=0, upper=2)
 
-st.dataframe("\nRange nilai setelah perbaikan:")
+st.write("\nRange nilai setelah perbaikan:")
 st.dataframe(df[kolom_numerik].head(25))
 
 
@@ -423,14 +423,14 @@ st.dataframe(df[kolom_numerik].head(25))
 
 
 # Perbaikan ketidakkonsistensinan data untuk kolom kategorikal
-st.dataframe("Memperbaiki konsistensi data kategorikal...")
+st.write("Memperbaiki konsistensi data kategorikal...")
 
 # Mengubah semua nilai kategorikal menjadi lowercase
 categorical_cols = df.select_dtypes(include=['object']).columns
 for col in categorical_cols:
     df[col] = df[col].str.lower()
 
-st.dataframe("\nSample data setelah perbaikan:")
+st.write("\nSample data setelah perbaikan:")
 st.dataframe(df[categorical_cols].head(10))
 
 
@@ -438,25 +438,25 @@ st.dataframe(df[categorical_cols].head(10))
 
 
 # Show number of duplicates before removal
-st.dataframe("Jumlah data duplikat sebelum penanganan:", df.duplicated().sum())
+st.write("Jumlah data duplikat sebelum penanganan:", df.duplicated().sum())
 
 # Remove duplicate rows while keeping the first occurrence
 df = df.drop_duplicates(keep='first')
 
 # Show number of duplicates after removal
-st.dataframe("Jumlah data duplikat setelah penanganan:", df.duplicated().sum())
+st.write("Jumlah data duplikat setelah penanganan:", df.duplicated().sum())
 
 # Reset index after removing duplicates
 df = df.reset_index(drop=True)
 
-st.dataframe("\nUkuran dataset setelah penanganan duplikasi:")
+st.write("\nUkuran dataset setelah penanganan duplikasi:")
 st.dataframe(df.shape)
 
 
 # In[78]:
 
 
-st.dataframe("Mengubah kolom kategorikal menjadi numerik...")
+st.write("Mengubah kolom kategorikal menjadi numerik...")
 # Bikin salinan dataframe biar data asli gak rusak
 df_encoded = df.copy()
 
@@ -482,28 +482,28 @@ df_encoded['NObeyesdad'] = target_encoder.fit_transform(df_encoded['NObeyesdad']
 # Hasil: tingkat obesitas jadi angka 0,1,2,3,dst
 
 # Tampilkan hasil encoding
-st.dataframe("Shape setelah encoding:", df_encoded.shape)
-st.dataframe("\nBeberapa baris pertama data yang sudah di-encode:")
+st.write("Shape setelah encoding:", df_encoded.shape)
+st.write("\nBeberapa baris pertama data yang sudah di-encode:")
 st.dataframe(df_encoded.head())
 
 # Cek tipe data untuk memastikan semuanya numerik
-st.dataframe("\nTipe data setelah encoding:")
+st.write("\nTipe data setelah encoding:")
 st.dataframe(df_encoded.dtypes)
 
 # Lihat mapping target variable biar paham konversinya
-st.dataframe("\nMapping target variable:")
-st.dataframe(f"Nilai asli: {df['NObeyesdad'].unique()}")
-st.dataframe(f"Nilai setelah encode: {df_encoded['NObeyesdad'].unique()}")
+st.write("\nMapping target variable:")
+st.write(f"Nilai asli: {df['NObeyesdad'].unique()}")
+st.write(f"Nilai setelah encode: {df_encoded['NObeyesdad'].unique()}")
 
 
 # In[79]:
 
 
 # menampilkan kolom target setelah encoding
-st.dataframe("\nEncoded NObeyesdad values:")
+st.write("\nEncoded NObeyesdad values:")
 st.dataframe(df['NObeyesdad'].head(10))
 
-st.dataframe("\nEncoded NObeyesdad values:")
+st.write("\nEncoded NObeyesdad values:")
 st.dataframe(df_encoded['NObeyesdad'].head(10))
 
 
@@ -511,7 +511,7 @@ st.dataframe(df_encoded['NObeyesdad'].head(10))
 # In[80]:
 
 
-st.dataframe("\nMenampilkan kolom yang paling berpengaruh terhadap kolom target")
+st.write("\nMenampilkan kolom yang paling berpengaruh terhadap kolom target")
 X = df_encoded.drop('NObeyesdad', axis=1)  # Fitur
 y = df['NObeyesdad']  # Target
 
@@ -534,7 +534,7 @@ st.dataframe(importance)
 
 # Get the top 10 features based on importance ranking
 top_10_features = importance.nlargest(10).index.tolist()
-st.dataframe("Top 10 features:", top_10_features)
+st.write("Top 10 features:", top_10_features)
 
 # Create a new RandomForestClassifier
 selector = RandomForestClassifier(random_state=42)
@@ -548,9 +548,9 @@ X_selected = rfe.fit_transform(X, y)
 # Create new dataframe with selected features
 X_selected_df = pd.DataFrame(X_selected, columns=np.array(X.columns)[rfe.support_])
 
-st.dataframe("\nSelected features:")
+st.write("\nSelected features:")
 for i, feature in enumerate(X_selected_df.columns, 1):
-    st.dataframe(f"{i}. {feature}")
+    st.write(f"{i}. {feature}")
 
 
 # In[82]:
@@ -591,9 +591,9 @@ st.pyplot(plt)
 plt.close()
 
 # Print class distribution before and after SMOTE
-st.dataframe("\nClass distribution before SMOTE:")
+st.write("\nClass distribution before SMOTE:")
 st.dataframe(pd.Series(y).value_counts())
-st.dataframe("\nClass distribution after SMOTE:")
+st.write("\nClass distribution after SMOTE:")
 st.dataframe(pd.Series(y_balanced).value_counts())
 
 # ===== VISUALISASI TOP 10 FITUR DENGAN BAR CHART =====
@@ -633,15 +633,14 @@ plt.tight_layout()
 st.pyplot(plt)
 plt.close()
 
-st.dataframe('''
+st.write('''
       Seperti yang terlihat, nilai rata-rata fitur seperti berat badan turun sedikit dari 88,80 menjadi 87,18 kg, 
       sementara tinggi badan dan jumlah makan utama tetap stabil. Perubahan ini sangat kecil, 
       menunjukkan SMOTE berhasil menyeimbangkan data tanpa mengubah karakteristik utama. 
       Ini penting untuk memastikan model machine learning kita bekerja lebih baik dengan data yang seimbang''')
 
 # Tampilkan perbandingan jumlah data
-st.dataframe("\nPERBANDINGAN JUMLAH DATA:")
-st.dataframe("=" * 40)
+st.write("\nPERBANDINGAN JUMLAH DATA:")
 
 fig2, ax = plt.subplots(1, 1, figsize=(8, 6))
 categories = ['Sebelum SMOTE', 'Sesudah SMOTE']  
@@ -662,12 +661,12 @@ st.pyplot(plt)
 plt.close()
 
 # Tampilkan ringkasan sederhana
-st.dataframe(f"\nRINGKASAN BALANCING:")
-st.dataframe(f"Data sebelum SMOTE: {X_selected.shape[0]} baris")
-st.dataframe(f"Data sesudah SMOTE: {X_balanced.shape[0]} baris")
-st.dataframe(f"Penambahan data: {X_balanced.shape[0] - X_selected.shape[0]} baris")
-st.dataframe(f"Fitur yang digunakan: {len(top_10_features)} fitur")
-st.dataframe(f"Semua kelas target sekarang seimbang: {len(set(y_balanced))} kelas dengan masing-masing {max(pd.Series(y_balanced).value_counts())} data")
+st.write(f"\nRINGKASAN BALANCING:")
+st.write(f"Data sebelum SMOTE: {X_selected.shape[0]} baris")
+st.write(f"Data sesudah SMOTE: {X_balanced.shape[0]} baris")
+st.write(f"Penambahan data: {X_balanced.shape[0] - X_selected.shape[0]} baris")
+st.write(f"Fitur yang digunakan: {len(top_10_features)} fitur")
+st.write(f"Semua kelas target sekarang seimbang: {len(set(y_balanced))} kelas dengan masing-masing {max(pd.Series(y_balanced).value_counts())} data")
 
 
 # In[83]:
@@ -682,10 +681,10 @@ X_balanced_scaled = X_balanced.copy()
 numeric_columns = X_balanced.select_dtypes(include=['float64', 'int64']).columns
 X_balanced_scaled[numeric_columns] = scaler.fit_transform(X_balanced[numeric_columns])
 
-st.dataframe("\nPerbandingan statistik sebelum dan sesudah standarisasi:")
-st.dataframe("\nSebelum standarisasi:")
+st.write("\nPerbandingan statistik sebelum dan sesudah standarisasi:")
+st.write("\nSebelum standarisasi:")
 st.dataframe(X_balanced[numeric_columns].describe())
-st.dataframe("\nSetelah standarisasi:")
+st.write("\nSetelah standarisasi:")
 st.dataframe(X_balanced_scaled[numeric_columns].describe())
 
 # Visualisasi distribusi data sebelum dan sesudah standarisasi
@@ -719,9 +718,9 @@ df_selected = df[selected_columns].copy()
 # Save to CSV file
 df_selected.to_csv('selected_features_data.csv', index=False)
 
-st.dataframe("Data has been saved to 'selected_features_data.csv'")
-st.dataframe(f"Saved {len(selected_columns)} columns: {', '.join(selected_columns)}")
-st.dataframe(f"Total rows: {len(df_selected)}")
+st.write("Data has been saved to 'selected_features_data.csv'")
+st.write(f"Saved {len(selected_columns)} columns: {', '.join(selected_columns)}")
+st.write(f"Total rows: {len(df_selected)}")
 
 
 # In[85]:
@@ -760,7 +759,7 @@ models = {
 results = {}
 
 for name, model in models.items():
-    st.dataframe(f"\nTraining {name}...")
+    st.write(f"\nTraining {name}...")
 
     # Train the model
     model.fit(X_train, y_train)
@@ -778,9 +777,9 @@ for name, model in models.items():
     }
 
     # Print results
-    st.dataframe(f"{name} Accuracy: {accuracy:.4f}")
-    st.dataframe("\nClassification Report:")
-    st.dataframe(classification_report(y_test, y_pred))
+    st.write(f"{name} Accuracy: {accuracy:.4f}")
+    st.write("\nClassification Report:")
+    st.write(classification_report(y_test, y_pred))
 
     # Plot confusion matrix
     plt.figure(figsize=(10, 8))
@@ -807,9 +806,9 @@ st.pyplot(plt)
 plt.close()
 
 # Print final comparison
-st.dataframe("\nFinal Model Comparison:")
+st.write("\nFinal Model Comparison:")
 for name, accuracy in accuracies.items():
-    st.dataframe(f"{name}: {accuracy:.4f}")
+    st.write(f"{name}: {accuracy:.4f}")
 
 
 # Berdasarkan hasil evaluasi ketiga model machine learning untuk prediksi tingkat obesitas, **Random Forest menunjukkan performa yang sangat superior** dengan akurasi 93.54%, jauh melampaui Logistic Regression (70.33%) dan Decision Tree yang belum selesai dijalankan. Random Forest menunjukkan keunggulan dalam semua metrik evaluasi, dengan precision, recall, dan f1-score yang konsisten tinggi di atas 0.86 untuk semua kategori obesitas. Khususnya untuk kategori "obesity_type_iii", model Random Forest mencapai precision sempurna (1.00) dan recall 0.99, menunjukkan kemampuan luar biasa dalam mengidentifikasi kasus obesitas tingkat III.
@@ -821,7 +820,7 @@ for name, accuracy in accuracies.items():
 
 # 4. Hyperparameter Tuning
 
-st.dataframe("4. Hyperparameter Tuning")
+st.subheader("4. Hyperparameter Tuning")
 
 
 
@@ -834,7 +833,7 @@ from sklearn.metrics import make_scorer, f1_score
 import numpy as np
 import time
 
-st.dataframe("HYPERPARAMETER TUNING DAN OPTIMASI MODEL")
+st.write("HYPERPARAMETER TUNING DAN OPTIMASI MODEL")
 
 
 # Definisikan grid parameter untuk setiap model
@@ -867,9 +866,9 @@ optimization_results = {}
 
 # Lakukan hyperparameter tuning untuk setiap model
 for name, model in models.items():
-    st.dataframe(f"\n{'-'*40}")
-    st.dataframe(f"Mengoptimalkan {name}...")
-    st.dataframe(f"{'-'*40}")
+    st.write(f"\n{'-'*40}")
+    st.write(f"Mengoptimalkan {name}...")
+    st.write(f"{'-'*40}")
 
     start_time = time.time()
 
@@ -911,21 +910,21 @@ for name, model in models.items():
         'optimization_time': end_time - start_time
     }
 
-    st.dataframe(f"Parameter terbaik untuk {name}:")
+    st.write(f"Parameter terbaik untuk {name}:")
     for param, value in search.best_params_.items():
-        st.dataframe(f"  {param}: {value}")
-    st.dataframe(f"Skor cross-validation terbaik: {search.best_score_:.4f}")
-    st.dataframe(f"Waktu optimasi: {end_time - start_time:.2f} detik")
+        st.write(f"  {param}: {value}")
+    st.write(f"Skor cross-validation terbaik: {search.best_score_:.4f}")
+    st.write(f"Waktu optimasi: {end_time - start_time:.2f} detik")
 
-st.dataframe(f"\n{'='*60}")
-st.dataframe("EVALUASI MODEL YANG SUDAH DIOPTIMASI")
-st.dataframe(f"{'='*60}")
+st.write(f"\n{'='*60}")
+st.write("EVALUASI MODEL YANG SUDAH DIOPTIMASI")
+st.write(f"{'='*60}")
 
 # Evaluasi model yang sudah dioptimasi
 optimized_results = {}
 
 for name, model in optimized_models.items():
-    st.dataframe(f"\nMengevaluasi {name} yang Sudah Dioptimasi...")
+    st.write(f"\nMengevaluasi {name} yang Sudah Dioptimasi...")
 
     # Buat prediksi
     y_pred = model.predict(X_test)
@@ -939,10 +938,10 @@ for name, model in optimized_models.items():
         'predictions': y_pred
     }
 
-    st.dataframe(f"Akurasi {name} yang Sudah Dioptimasi: {accuracy:.4f}")
-    st.dataframe(f"Peningkatan: {accuracy - results[name]['accuracy']:.4f}")
-    st.dataframe("\nLaporan Klasifikasi:")
-    st.dataframe(classification_report(y_test, y_pred))
+    st.write(f"Akurasi {name} yang Sudah Dioptimasi: {accuracy:.4f}")
+    st.write(f"Peningkatan: {accuracy - results[name]['accuracy']:.4f}")
+    st.write("\nLaporan Klasifikasi:")
+    st.write(classification_report(y_test, y_pred))
 
     # Plot confusion matrix untuk model yang sudah dioptimasi
     plt.figure(figsize=(10, 8))
@@ -955,9 +954,9 @@ for name, model in optimized_models.items():
     st.pyplot(plt)
     plt.close()
 
-st.dataframe(f"\n{'='*60}")
-st.dataframe("PERBANDINGAN PERFORMA SEBELUM DAN SESUDAH OPTIMASI")
-st.dataframe(f"{'='*60}")
+
+st.write("PERBANDINGAN PERFORMA SEBELUM DAN SESUDAH OPTIMASI")
+
 
 # Buat visualisasi perbandingan
 fig, axes = plt.subplots(2, 2, figsize=(15, 12))
@@ -1032,10 +1031,10 @@ st.pyplot(plt)
 plt.close()
 
 # st.dataframe tabel perbandingan detail
-st.dataframe("\nTABEL PERBANDINGAN DETAIL:")
-st.dataframe("="*80)
-st.dataframe(f"{'Model':<20} {'Asli':<12} {'Dioptimasi':<12} {'Peningkatan':<12} {'Skor CV':<12}")
-st.dataframe("-"*80)
+st.write("\nTABEL PERBANDINGAN DETAIL:")
+st.write("="*80)
+st.write(f"{'Model':<20} {'Asli':<12} {'Dioptimasi':<12} {'Peningkatan':<12} {'Skor CV':<12}")
+st.write("-"*80)
 
 for name in model_names:
     original_acc = results[name]['accuracy']
@@ -1043,16 +1042,16 @@ for name in model_names:
     improvement = optimized_acc - original_acc
     cv_score = optimization_results[name]['best_score']
 
-    st.dataframe(f"{name:<20} {original_acc:<12.4f} {optimized_acc:<12.4f} {improvement:<12.4f} {cv_score:<12.4f}")
+    st.write(f"{name:<20} {original_acc:<12.4f} {optimized_acc:<12.4f} {improvement:<12.4f} {cv_score:<12.4f}")
 
-st.dataframe("-"*80)
+st.write("-"*80)
 
 # Cari model dengan performa terbaik
 best_model_name = max(optimized_results.keys(), key=lambda x: optimized_results[x]['accuracy'])
 best_accuracy = optimized_results[best_model_name]['accuracy']
 
-st.dataframe(f"\nMODEL DENGAN PERFORMA TERBAIK: {best_model_name}")
-st.dataframe(f"Akurasi: {best_accuracy:.4f}")
-st.dataframe(f"Parameter Terbaik: {optimization_results[best_model_name]['best_params']}")
+st.write(f"\nMODEL DENGAN PERFORMA TERBAIK: {best_model_name}")
+st.write(f"Akurasi: {best_accuracy:.4f}")
+st.write(f"Parameter Terbaik: {optimization_results[best_model_name]['best_params']}")
 
 
