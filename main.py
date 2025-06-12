@@ -844,10 +844,10 @@ param_grids = {
         'max_features': ['sqrt', 'log2', None]
     },
     'Logistic Regression': {
-        'C': [0.001, 0.01, 0.1, 1, 10, 100],
-        'penalty': ['l1', 'l2'],
-        'solver': ['liblinear', 'saga'],
-        'max_iter': [1000, 2000, 3000]
+    'C': [0.001, 0.01, 0.1, 1, 10, 100],
+    'penalty': ['l2'],  # Hapus 'l1' dulu
+    'solver': ['lbfgs'],  # Ganti ke solver yang lebih stabil
+    'max_iter': [5000, 10000]  # Naikin lebih tinggi
     },
     'Decision Tree': {
         'max_depth': [None, 5, 10, 15, 20, 25],
