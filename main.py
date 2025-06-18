@@ -545,7 +545,7 @@ st.markdown(
     """
     <div style="text-align: center; color: #666; padding: 20px;">
         <p>🏥 <strong>Aplikasi Prediksi Tingkat Obesitas</strong> | 
-        Developed with ❤️ using Streamlit & Machine Learning</p>
+        Developed with Muhammad Ashief using Streamlit & Machine Learning</p>
         <p><small>⚠️ Untuk tujuan edukasi - Konsultasikan dengan dokter untuk diagnosis medis</small></p>
     </div>
     """, 
