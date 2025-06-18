@@ -28,7 +28,7 @@ st.markdown("---")
 st.sidebar.title("📋 Menu Navigasi")
 menu = st.sidebar.selectbox(
     "Pilih Menu:",
-    ["🎯 Prediksi Obesitas", "📊 Analisis Data", "ℹ️ Informasi"]
+    ["🎯 Prediksi Obesitas", "ℹ️ Informasi"]
 )
 
 @st.cache_data
